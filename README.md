@@ -2,7 +2,17 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+First, install the necessary dependancies:
+
+```bash
+npm i firebase
+npm i @mui/material @emotion/react @emotion/styled
+npm i @clerk/nextjs
+npm i @stripe/stripe-js
+npm i --save groq
+```
+
+Finally, run the development server:
 
 ```bash
 npm run dev
