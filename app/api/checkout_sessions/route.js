@@ -28,4 +28,21 @@ export async function POST(req) {
         cancel_url: `${req.headers.origin}/result?session_id={CHECKOUT_SESSION_ID}`,
     }
     const checkoutSession = await stripe.checkout.sessions.create(params)
+    return NextResponse.json({ id: checkoutSession.id });
+}
+// GET Route for retrieving session details
+export async function GET(req) {
+    const url = new URL(req.url);
+    const sessionId = url.searchParams.get('session_id');
+
+    if (!sessionId) {
+        return NextResponse.json({ error: 'Missing session_id' }, { status: 400 });
+    }
+
+    try {
+        const checkoutSession = await stripe.checkout.sessions.retrieve(sessionId);
+        return NextResponse.json(checkoutSession);
+    } catch (error) {
+        return NextResponse.json({ error: error.message }, { status: 500 });
+    }
 }
