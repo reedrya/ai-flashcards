@@ -109,7 +109,35 @@ export default function GenerateClient() {
           multiline
           rows={4}
           variant="outlined"
-          sx={{ mb: 2 }}
+          sx={{ 
+            mb: 2,
+            // Text color
+            '& .MuiInputBase-input': {
+              color: 'white',
+            },
+            // Outline color
+            '& .MuiOutlinedInput-root': {
+              '& fieldset': {
+                borderColor: 'rgba(255, 255, 255, 0.5)', 
+              },
+              // Outline color on hover
+              '&:hover fieldset': {
+                borderColor: 'white', 
+              },
+              // Outline color when focused
+              '&.Mui-focused fieldset': {
+                borderColor: 'white', 
+              },
+            },
+            // Label color
+            '& .MuiInputLabel-root': {
+              color: 'rgba(255, 255, 255, 0.5)', 
+            },
+            // Label color when focused
+            '& .MuiInputLabel-root.Mui-focused': {
+              color: 'white', 
+            },
+          }}
         />
         <Button
           variant="contained"

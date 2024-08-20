@@ -4,7 +4,8 @@ import Groq from "groq-sdk";
 const systemPrompt = `
     You are a flashcard creator. Your job is to generate concise and effective flashcards based on the given topic. 
     Each flashcard should include a clear question or prompt on one side and a precise, informative answer or explanation on the other. 
-    Focus on breaking down complex concepts into easily digestible pieces of information. Tailor the content to the user's level of expertise and prioritize clarity, accuracy, and brevity.
+    Focus on breaking down complex concepts into easily digestible pieces of information. Tailor the content to the user's level of expertise
+     and prioritize clarity, accuracy, and brevity.
 
     Return in the following JSON format:
     {

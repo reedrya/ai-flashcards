@@ -32,7 +32,7 @@ export default function Home() {
         <Typography variant="h2" gutterBottom>Welcome to Flashcard SaaS</Typography>
         <Typography variant="h5" gutterBottom>
           {' '}
-          The easiest way to make flashcards from text
+          The easiest way to make flashcards from text.
         </Typography>
         <Button
           variant="contained"
@@ -46,38 +46,62 @@ export default function Home() {
       </Box>
 
       <Box sx={{ my: 6 }}>
-        <Typography variant="h4" paddingBottom={3}>
+        <Typography variant="h4" pb={3} pl={3}>
           Features
         </Typography>
         <Grid container spacing={4}>
           <Grid item xs={12} md={4}>
-            <Typography variant="h6">Easy Text Input</Typography>
-            <Typography>
-              {' '}
-              Simply input your text and let our software do the rest.
+            <Typography variant="h6" pl={3}>
+              Easy Text Input
             </Typography>
+            <Box sx={{
+              p: 3,
+              border: '1px solid',
+              borderColor: 'grey.300',
+              borderRadius: 2,
+            }}>
+              <Typography>
+                {' '}
+                Simply input your text and let our software do the rest.
+              </Typography>
+          </Box>
+              
           </Grid>
 
           <Grid item xs={12} md={4}>
-            <Typography variant="h6">Smart Flashcards</Typography>
-            <Typography>
-              {' '}
-              Our AI intelligently breaks down your text into concise flashcards, 
-              perfect for studying.
-            </Typography>
+            <Typography variant="h6" pl={3}>Smart Flashcards</Typography>
+            <Box sx={{
+              p: 3,
+              border: '1px solid',
+              borderColor: 'grey.300',
+              borderRadius: 2,
+            }}>
+              <Typography>
+                {' '}
+                Our AI intelligently breaks down your text into concise flashcards, 
+                perfect for studying.
+              </Typography>
+            </Box>
           </Grid>
           <Grid item xs={12} md={4}>
-            <Typography variant="h6">Accessible Anywhere</Typography>
-            <Typography>
-              {' '}
-              Access your flashcards from any device, at any time.
-            </Typography>
+            <Typography variant="h6" pl={3}>Accessible Anywhere</Typography>
+            <Box sx={{
+              p: 3,
+              border: '1px solid',
+              borderColor: 'grey.300',
+              borderRadius: 2,
+            }}>
+              <Typography>
+                {' '}
+                Access your flashcards from any device, at any time.
+              </Typography>
+            </Box>
           </Grid>
         </Grid>
       </Box>
 
       <Box sx={{ my: 6, textAlign: 'center' }}>
-        <Typography variant="h4" paddingBottom={3}>Pricing</Typography>
+        <Typography variant="h4" paddingBottom={5}>Pricing</Typography>
         <Grid container spacing={4}>
           <Grid item xs={12} md={6}>
             <Box sx={{
