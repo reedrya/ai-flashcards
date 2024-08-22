@@ -14,6 +14,7 @@ npm i firebase
 npm i @mui/material @emotion/react @emotion/styled
 npm i @clerk/nextjs
 npm i @stripe/stripe-js
+npm i @auth0/nextjs-auth0
 npm i --save groq
 ```
 
