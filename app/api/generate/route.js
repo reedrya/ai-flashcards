@@ -2,25 +2,36 @@ import { NextResponse } from "next/server";
 import Groq from "groq-sdk";
 
 const systemPrompt = `
-    You are a flashcard creator. Your job is to generate concise and effective flashcards based on the given topic. 
-    Each flashcard should include a clear question or prompt on one side and a precise, informative answer or explanation on the other. 
-    Focus on breaking down complex concepts into easily digestible pieces of information. Tailor the content to the user's level of expertise
-     and prioritize clarity, accuracy, and brevity.
+You are a flashcard creator. Your task is to generate concise and effective flashcards based on the given topic or content. Please follow these guidelines:
 
-    Return in the following JSON format:
-    {
-        "flashcards":[
-            {
-                "front": str,
-                "back": str
-            }
-        ]
-    }
+1. Create clear and concise questions for the front of the flashcard.
+2. Provide accurate and concise answers for the back of the flashcard.
+3. Ensure that each flashcard focuses on a single concept or piece of information.
+4. Make the language of the flashcards accessible to a wide range of learners.
+5. Incorporate various question types, such as definitions, examples, comparisons, and applications.
+6. Avoid overly complex or ambiguous phrasing in both questions and answers.
+7. Include essential details or memory aids to help reinforce the information.
+8. Adjust the difficulty level of the flashcards to the user's specified preferences.
+9. Emphasize and extract the most important and relevant information for the flashcards.
+
+Create a balanced set of flashcards that covers the topic comprehensively. Remember that the goal is to facilitate effective learning and retention of information through these flashcards.
+
+Return in the following JSON format:
+{
+    "flashcards": [
+        {
+            "front": "string",
+            "back": "string"
+        }
+    ]
+}
 `;
 
 export async function POST(req) {
     const groq = new Groq();
     const data = await req.text();
+
+    console.log('Received text:', data);
 
     try {
         const completion = await groq.chat.completions.create({
@@ -29,21 +40,22 @@ export async function POST(req) {
                 { role: 'user', content: data },
             ],
             model: 'llama3-8b-8192',
-            response_format: { type: 'json_object' },
+            response_format: { type: 'json_object' }, 
         });
 
-        // Ensure the response is in JSON format
+        console.log('Completion response:', completion);
+
         const content = completion.choices[0].message.content;
 
-        // Parse JSON response
         let flashcards;
         try {
             flashcards = JSON.parse(content);
+            console.log('Parsed flashcards:', flashcards);
         } catch (parseError) {
+            console.error('Failed to parse JSON response:', parseError);
             throw new Error('Failed to parse JSON response');
         }
 
-        // Validate response structure
         if (!flashcards.flashcards || !Array.isArray(flashcards.flashcards)) {
             throw new Error('Invalid response format');
         }

@@ -1,48 +1,35 @@
-import { NextResponse } from "next/server"
-import Stripe from "stripe"
+import { NextResponse } from "next/server";
+import Stripe from "stripe";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(req) {
+    const { priceId } = await req.json(); // Extract priceId from the request body
+
+    if (!priceId) {
+        return NextResponse.json({ error: 'Missing priceId' }, { status: 400 });
+    }
+
+    const origin = req.headers.get('origin') || 'http://localhost:3000';  // Fallback to localhost for development
+
     const params = {
-        submit_type: 'subscription',
         payment_method_types: ['card'],
+        mode: 'subscription',
         line_items: [
             {
-                price_data: {
-                    currency: 'usd',
-                    product_data: {
-                        name: 'Pro Subscription',
-                    },
-                    unit_amount: formatAmountForStripe(10),
-                    recurring: {
-                        interval: 'month',
-                        interval_count: 1,
-                    },
-                },
-
+                price: priceId,  // Dynamically use the price ID sent from the frontend
                 quantity: 1,
             },
         ],
-        success_url: `${req.headers.origin}/result?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${req.headers.origin}/result?session_id={CHECKOUT_SESSION_ID}`,
-    }
-    const checkoutSession = await stripe.checkout.sessions.create(params)
-    return NextResponse.json({ id: checkoutSession.id });
-}
-// GET Route for retrieving session details
-export async function GET(req) {
-    const url = new URL(req.url);
-    const sessionId = url.searchParams.get('session_id');
-
-    if (!sessionId) {
-        return NextResponse.json({ error: 'Missing session_id' }, { status: 400 });
-    }
+        success_url: `${origin}/result?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${origin}/result?session_id={CHECKOUT_SESSION_ID}`,
+    };
 
     try {
-        const checkoutSession = await stripe.checkout.sessions.retrieve(sessionId);
-        return NextResponse.json(checkoutSession);
+        const checkoutSession = await stripe.checkout.sessions.create(params);
+        return NextResponse.json({ id: checkoutSession.id });  // Return the session ID to the frontend
     } catch (error) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        console.error('Error creating checkout session:', error);
+        return NextResponse.json({ error: error.message }, { status: 500 });  // Return the error message to the frontend
     }
 }
