@@ -116,7 +116,7 @@ export default function Home() {
               color: '#fff',
               fontFamily: 'Roboto, Arial, sans-serif',
             }}>
-              Simply copy and paste your text, click 'Generate', and your flashcards are ready.
+              Simply copy and paste your text, click &apos;Generate&apos;, and your flashcards are ready.
             </Box>
           </Grid>
 
