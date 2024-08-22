@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Container, Box, Typography, CircularProgress } from '@mui/material';
