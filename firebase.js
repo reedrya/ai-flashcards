@@ -14,12 +14,16 @@ const firebaseConfig = {
 const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
 
 let analytics;
-if (typeof window !== 'undefined') {
-  isSupported().then((supported) => {
-    if (supported) {
-      analytics = getAnalytics(app);
-    }
-  });
-}
 
 export { app, analytics };
+
+export async function initializeAnalytics() {
+  if (typeof window !== 'undefined' && !analytics) {
+    const supported = await isSupported();
+    if (supported) {
+      analytics = getAnalytics(app);
+      return analytics;
+    }
+  }
+  return null;
+}
